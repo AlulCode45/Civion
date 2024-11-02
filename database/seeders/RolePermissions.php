@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RolesEnum;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -39,15 +40,15 @@ class RolePermissions extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
 
-        $role = Role::create(['name' => 'member']);
+        $role = Role::create(['name' => RolesEnum::Member->value]);
         $role->givePermissionTo(
             ['edit report', 'add report', 'delete report']
         );
 
-        $role = Role::create(['name' => 'goverment']);
+        $role = Role::create(['name' => RolesEnum::Goverment->value]);
         $role->givePermissionTo(['add response', 'edit response', 'delete response']);
 
-        $role = Role::create(['name' => 'admin']);
+        $role = Role::create(['name' => RolesEnum::Admin->value]);
         $role->givePermissionTo(Permission::all());
     }
 }
