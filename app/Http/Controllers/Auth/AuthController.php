@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
 use App\Models\User;
@@ -13,10 +14,8 @@ class AuthController extends Controller
     {
         $validated = $request->validated();
         $user = User::where('email', $validated['email'])->first();
-        if (!$user || !Hash::check($validated['password'], $user->password)) {
-            return response()->json([
-                'token' => $user->createToken('token')->plainTextToken
-            ]);
-        }
+        return ResponseHelper::success([
+            'token' => $user->createToken('auth_token')->plainTextToken
+        ], 'Login success');
     }
 }
