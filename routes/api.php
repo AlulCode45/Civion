@@ -3,6 +3,13 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+
+Route::middleware(\App\Http\Middleware\AdminMiddleware::class)->group(function () {
+
+});
+Route::middleware(\App\Http\Middleware\MemberMiddleware::class)->group(function () {
+
+});
+Route::middleware(\App\Http\Middleware\GovermentMiddleware::class)->group(function () {
+
+});
