@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Category\Auth;
 
 use App\Helpers\ResponseHelper;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Category\Controller;
 use App\Http\Requests\AuthRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response as ResponseCode;
 
 class AuthController extends Controller
 {
@@ -14,8 +15,24 @@ class AuthController extends Controller
     {
         $validated = $request->validated();
         $user = User::where('email', $validated['email'])->first();
-        return ResponseHelper::success([
-            'token' => $user->createToken('auth_token')->plainTextToken
-        ], 'Login success');
+        if($user){
+            return ResponseHelper::success([
+                'token' => $user->createToken('auth_token')->plainTextToken
+            ], 'Login success');
+        }
+        return ResponseHelper::error([
+            'message' => 'Email or password is incorrect'
+        ],code: ResponseCode::HTTP_UNAUTHORIZED);
+    }
+
+    public function logout()
+    {
+        $user = auth()->user();
+        if($user){
+            $user->tokens()->delete();
+            return ResponseHelper::success(message: 'Logout success');
+        }else{
+            return ResponseHelper::error(message: 'Logout failed');
+        }
     }
 }
