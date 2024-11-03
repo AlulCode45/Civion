@@ -1,18 +1,28 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Category;
 
+use App\Contracts\Interface\Category\CategoryInterface;
+use App\Helpers\ResponseHelper;
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    private CategoryInterface $category;
+
+    function __construct(CategoryInterface $category)
+    {
+        $this->category = $category;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return ResponseHelper::success($this->category->getCategoryWithReports());
     }
 
     /**
