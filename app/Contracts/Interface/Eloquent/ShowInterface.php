@@ -4,7 +4,7 @@ namespace App\Contracts\Interface\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 
-interface ViewInterface
+interface ShowInterface
 {
-    public function view(Model $data): mixed;
+    public function show(mixed $id): mixed;
 }
