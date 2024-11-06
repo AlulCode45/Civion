@@ -4,5 +4,5 @@ namespace App\Contracts\Interface\Eloquent;
 
 interface StoreInterface
 {
-    public function store(): mixed;
+    public function store(array $data): mixed;
 }
