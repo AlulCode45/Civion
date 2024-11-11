@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 interface DeleteInterface
 {
-    public function delete(Model $id): mixed;
+    public function delete(mixed $id): mixed;
 }
