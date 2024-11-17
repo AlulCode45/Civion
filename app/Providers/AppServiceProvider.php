@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Contracts\Interface\Category\CategoryInterface;
+use App\Contracts\Interface\News\NewsInterface;
 use App\Contracts\Interface\Reports\ReportsInterface;
 use App\Contracts\Repository\Category\CategoryRepository;
+use App\Contracts\Repository\News\NewsRepository;
 use App\Contracts\Repository\Reports\ReportsRepository;
 use App\Models\Category;
 use App\Models\News;
@@ -34,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
     private array $register = [
         CategoryInterface::class => CategoryRepository::class,
         ReportsInterface::class => ReportsRepository::class,
+        NewsInterface::class => NewsRepository::class
     ];
     /**
      * Register any application services.

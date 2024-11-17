@@ -1,18 +1,34 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\News;
 
+use App\Contracts\Interface\News\NewsInterface;
+use App\Helpers\ResponseHelper;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\NewsRequest;
 use App\Models\News;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
+    private NewsInterface $news;
+    public function __construct(
+        NewsInterface $news,
+    )
+    {
+        $this->news = $news;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        try{
+            return ResponseHelper::success($this->news->get());
+
+        }catch (\Exception $exception){
+            return ResponseHelper::error($exception->getMessage());
+        }
     }
 
     /**
@@ -36,7 +52,11 @@ class NewsController extends Controller
      */
     public function show(News $news)
     {
-        //
+        try{
+            return ResponseHelper::success($this->news->show($news->id));
+        }catch (\Exception $exception){
+            return ResponseHelper::error($exception->getMessage());
+        }
     }
 
     /**
@@ -50,9 +70,15 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, News $news)
+    public function update(NewsRequest $request, News $news)
     {
-        //
+        try{
+            $validated = $request->validated();
+            $this->news->update($validated,$news->id);
+            return ResponseHelper::success($validated, message: "Update success");
+        }catch (\Exception $exception){
+            return ResponseHelper::error($exception->getMessage());
+        }
     }
 
     /**
@@ -60,6 +86,11 @@ class NewsController extends Controller
      */
     public function destroy(News $news)
     {
-        //
+        try{
+            $this->news->delete($news->id);
+            return ResponseHelper::success("Delete success");
+        }catch (\Exception $exception){
+            return ResponseHelper::error($exception->getMessage());
+        }
     }
 }

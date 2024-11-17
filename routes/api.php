@@ -11,7 +11,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware(\App\Http\Middleware\AdminMiddleware::class)->group(function () {
         Route::resource('/category', \App\Http\Controllers\Category\CategoryController::class);
         Route::resource('/reports', \App\Http\Controllers\Reports\ReportsController::class);
-        Route::resource('/news', \App\Http\Controllers\NewsController::class);
+        Route::resource('/news', \App\Http\Controllers\News\NewsController::class);
         Route::resource('/responses', \App\Http\Controllers\ResponseController::class);
         Route::resource('/ratings', \App\Http\Controllers\RatingsController::class);
     });
