@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Enums\RolesEnum;
 use App\Models\Category;
+use App\Models\News;
 use App\Models\Reports;
 use App\Models\Response;
 use App\Models\User;
@@ -25,5 +26,7 @@ class DatabaseSeeder extends Seeder
         Category::factory(10)->create();
         Reports::factory(15)->create();
         Response::factory(20)->create();
+        News::factory(10)->create();
+        \App\Models\NewsComment::factory(10)->create();
     }
 }

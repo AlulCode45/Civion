@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('slug');
+            $table->longText('body');
+            $table->string('thumbnail');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained('categories');
+            $table->enum('status', [
+                \App\Enums\NewsStatusEnum::PUBLISHED->value,
+                \App\Enums\NewsStatusEnum::DRAFT->value,
+            ])->default(\App\Enums\NewsStatusEnum::PUBLISHED->value);
             $table->timestamps();
         });
     }
